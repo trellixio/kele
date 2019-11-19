@@ -31,12 +31,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # third packages
+    'rest_framework',
+
+    # apps
+    'event',
+    'event.auth',
+    'event.review',
+    'event.user',
 ]
 
 MIDDLEWARE = [
@@ -49,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Event.urls'
+ROOT_URLCONF = 'event.routers'
 
 TEMPLATES = [
     {
@@ -68,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'event.wsgi.application'
+WSGI_APPLICATION = 'EventRoot.wsgi.application'
 
 
 # Database
@@ -119,3 +128,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Authentication
+
+AUTH_USER_MODEL = 'event_user.User'
+
+# JWT
+
+JWT_SECRET = os.getenv('JWT_SECRET')
