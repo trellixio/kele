@@ -1,13 +1,15 @@
 from django.contrib.auth.models import UserManager, AbstractUser
 from django.db import models
 
+from event.xlib.utils import generate_uid
+
 
 class EventUserManager(UserManager):
     pass
 
 
 class User(AbstractUser):
-    uid = models.UUIDField(primary_key=True, auto_created=True)
+    id = models.UUIDField(primary_key=True, auto_created=True, default=generate_uid)
 
     updated = models.DateTimeField(auto_now=True)
 
@@ -18,4 +20,5 @@ class User(AbstractUser):
 
     class Meta:
         db_table = 'event.user'
+        unique_together = (('email',),)
         managed = True
