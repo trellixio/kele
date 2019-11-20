@@ -50,7 +50,10 @@ class EventTokenAuthentication(BaseAuthentication):
         except user_model.DoesNotExist:
             raise exceptions.AuthenticationFailed('Invalid username/password.')
 
-        key = user.auth_token.key
+        try:
+            key = user.auth_token.key
+        except self.model.DoesNotExist:
+            raise exceptions.AuthenticationFailed('Invalid username/password.')
 
         if not check_key(key, payload['key']):
             raise exceptions.AuthenticationFailed('Invalid username/password.')
