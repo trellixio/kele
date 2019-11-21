@@ -8,9 +8,10 @@ from event.auth.models import AuthToken
 from event.xlib.utils import check_key, generate_token
 
 
-class EventTokenAuthentication(BaseAuthentication):
+class JWTAuthentication(BaseAuthentication):
     keyword = 'Bearer'
     model = AuthToken
+    msg = 'Invalid username/password.'
 
     def authenticate(self, request):
         auth = get_authorization_header(request).split()
@@ -19,17 +20,14 @@ class EventTokenAuthentication(BaseAuthentication):
             return None
 
         if len(auth) == 1:
-            msg = 'Invalid username/password.'
-            raise exceptions.AuthenticationFailed(msg)
+            raise exceptions.AuthenticationFailed(self.msg)
         elif len(auth) > 2:
-            msg = 'Invalid username/password.'
-            raise exceptions.AuthenticationFailed(msg)
+            raise exceptions.AuthenticationFailed(self.msg)
 
         try:
             token = auth[1].decode()
         except UnicodeError:
-            msg = 'Invalid username/password.'
-            raise exceptions.AuthenticationFailed(msg)
+            raise exceptions.AuthenticationFailed(self.msg)
 
         return self.authenticate_credentials(token)
 
@@ -40,23 +38,22 @@ class EventTokenAuthentication(BaseAuthentication):
         try:
             payload = jwt.decode(token, settings.JWT_SECRET)
         except (jwt.ExpiredSignatureError, jwt.DecodeError):
-            msg = 'Invalid username/password'
-            raise exceptions.AuthenticationFailed(msg)
+            raise exceptions.AuthenticationFailed(self.msg)
 
         user_model = get_user_model()
 
         try:
             user = user_model.objects.get(email=payload['email'])
         except user_model.DoesNotExist:
-            raise exceptions.AuthenticationFailed('Invalid username/password.')
+            raise exceptions.AuthenticationFailed(self.msg)
 
         try:
             key = user.auth_token.key
         except self.model.DoesNotExist:
-            raise exceptions.AuthenticationFailed('Invalid username/password.')
+            raise exceptions.AuthenticationFailed(self.msg)
 
         if not check_key(key, payload['key']):
-            raise exceptions.AuthenticationFailed('Invalid username/password.')
+            raise exceptions.AuthenticationFailed(self.msg)
 
         if not user.is_active:
             raise exceptions.AuthenticationFailed('User inactive or deleted.')

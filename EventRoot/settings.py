@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    # 'django.contrib.messages',
     'django.contrib.staticfiles',
 
     # third packages
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
 
     # apps
     'event',
+    'event.event',
     'event.auth',
     'event.review',
     'event.user',
@@ -46,11 +46,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -132,13 +129,15 @@ JWT_SECRET = "6389208609a6d2209f93f23edf372a8254d09165"
 # REST FRAMEWORK
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'event.auth.authentication.JWTAuthentication',
     ],
 
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'event.auth.authentication.EventTokenAuthentication',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'event.xlib.rest_framework.permissions.IsOwnerOrAdmin',
     ],
+
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
@@ -149,4 +148,15 @@ REST_FRAMEWORK = {
     },
 
     # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning'
+
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
+
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+
+    # 'DEFAULT_CONTENT_NEGOTIATION_CLASS': 'event.xlib.rest_framework.negotiation.EventDefaultContentNegotiation',
 }

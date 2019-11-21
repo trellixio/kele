@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from event.auth.authentication import EventTokenAuthentication
+from event.auth.authentication import JWTAuthentication
 from event.auth.models import AuthToken
 from event.auth.serializer import AuthTokenSerializer
 
@@ -19,5 +19,5 @@ class ObtainTokenViewSet(viewsets.ViewSet):
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        token = EventTokenAuthentication().get_auth_token(user)
+        token = JWTAuthentication().get_auth_token(user)
         return Response({'token': token}, status.HTTP_200_OK)
