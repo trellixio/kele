@@ -4,6 +4,5 @@ from event.xlib.rest_framework.viewsets import CurrentObjectViewSet
 
 
 class CurrentUserViewSet(CurrentObjectViewSet):
-    http_method_names = ['get']
     serializer_class = UserSerializer
     queryset = User.objects.all()

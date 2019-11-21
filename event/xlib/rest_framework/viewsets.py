@@ -1,9 +1,9 @@
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets
 
-from .mixins import CurrentModelMixin
+from .mixins import CurrentRetrieveModelMixin, CurrentUpdateModelMixin
 
 
-class CurrentObjectViewSet(CurrentModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class CurrentObjectViewSet(CurrentRetrieveModelMixin, CurrentUpdateModelMixin, viewsets.GenericViewSet):
     http_method_names = ['get', 'put']
 
     def get_object(self):

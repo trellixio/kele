@@ -4,12 +4,19 @@ from rest_framework.routers import SimpleRouter, Route
 class EventRouter(SimpleRouter):
     custom_routes = [
         Route(
-            url=r'^{prefix}$',
+            url=r'^{prefix}{trailing_slash}$',
             mapping={'get': 'current'},
-            name='{basename}',
+            name='{basename}-current',
             detail=False,
             initkwargs={'suffix': 'Current'}
-        )
+        ),
+        Route(
+            url=r'^{prefix}/update{trailing_slash}$',
+            mapping={'put': 'current_update'},
+            name='{basename}-update',
+            detail=False,
+            initkwargs={}
+        ),
     ]
 
     def __init__(self):

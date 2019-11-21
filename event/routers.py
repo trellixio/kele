@@ -18,7 +18,7 @@ auth_router.register(r'register', RegisterViewSet, base_name='auth-register')
 
 user_router = EventRouter()
 
-user_router.register(r'me', CurrentUserViewSet, base_name='user-current')
+user_router.register(r'me', CurrentUserViewSet, base_name='user')
 
 urlpatterns = [
     path(r'v1/', include((auth_router.urls, 'auth'), namespace='auth')),
