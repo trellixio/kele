@@ -38,10 +38,9 @@ INSTALLED_APPS = [
 
     # apps
     'event',
-    'event.event',
-    'event.auth',
-    'event.review',
-    'event.user',
+    'auth',
+    'comment',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'event.routers'
+ROOT_URLCONF = 'EventRoot.routers'
 
 TEMPLATES = [
     {
@@ -130,12 +129,12 @@ JWT_SECRET = "6389208609a6d2209f93f23edf372a8254d09165"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'event.auth.authentication.JWTAuthentication',
+        'auth.authentication.JWTAuthentication',
     ],
 
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-        'event.xlib.rest_framework.permissions.IsOwnerOrAdmin',
+        'xlib.rest_framework.permissions.IsOwnerOrAdmin',
     ],
 
     'DEFAULT_THROTTLE_CLASSES': [
@@ -147,8 +146,6 @@ REST_FRAMEWORK = {
         'user': '150/minute',
     },
 
-    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning'
-
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.MultiPartParser',
@@ -158,5 +155,4 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
 
-    # 'DEFAULT_CONTENT_NEGOTIATION_CLASS': 'event.xlib.rest_framework.negotiation.EventDefaultContentNegotiation',
 }
