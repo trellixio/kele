@@ -14,12 +14,12 @@ class IsOwnerOrAdmin(BasePermission):
         return obj == request.user
 
 
-class UpdateOrRetrieveOnlyForAdmin(BasePermission):
+class ListCreateDeleteOnlyForAdmin(BasePermission):
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
 
-        if view.action in ['retrieve', 'update', 'partial_update', 'delete']:
+        if view.action in ['list', 'destroy', 'create']:
             return False
 
         return True
