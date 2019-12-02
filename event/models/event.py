@@ -1,7 +1,15 @@
+import os
+
 from django.db import models
+from django.utils.timezone import now
 
 from user.models import User
 from xlib.utils import generate_uid
+
+
+def _content_file_name(instance, filename):
+    filename = "%s_%s" % (now().isoformat(), filename)
+    return os.path.join('event', filename)
 
 
 class EventManager(models.Manager):
@@ -15,7 +23,7 @@ class Event(models.Model):
     date = models.DateTimeField()
     location = models.CharField(max_length=100)
     description = models.CharField(max_length=3000, null=True)
-    photo = models.URLField(null=True)
+    photo = models.ImageField(null=True, upload_to=_content_file_name)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

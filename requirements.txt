@@ -2,3 +2,4 @@ Django==2.2.7
 djangorestframework==3.10.3
 PyJWT==1.7.1
 drf-nested-routers==0.91
+Pillow==6.2.1

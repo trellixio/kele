@@ -3,12 +3,12 @@ from rest_framework import viewsets
 
 from user.models import User
 from user.serializers import UserSerializer
-from xlib.rest_framework.permissions import ListCreateDeleteOnlyForAdmin, IsOwnerOrAdmin
+from xlib.permissions import ListCreateDeleteOnlyForAdmin, IsOwnerOrAdminOrReadOnly
 
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    permission_classes = [ListCreateDeleteOnlyForAdmin, IsOwnerOrAdmin]
+    permission_classes = [ListCreateDeleteOnlyForAdmin, IsOwnerOrAdminOrReadOnly]
 
     def get_queryset(self):
         return User.objects.exclude(id=self.request.user.id)

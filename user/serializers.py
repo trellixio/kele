@@ -1,18 +1,18 @@
 from rest_framework import serializers
 
-from event.serializers import EventSerializer
+# from event.serializers import EventSerializer
 from user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
     created = serializers.DateTimeField(source='date_joined', read_only=True)
-    events = EventSerializer(many=True, source='event_set', read_only=True)
+    # events = EventSerializer(many=True, source='event_set', read_only=True)
 
     class Meta:
         model = User
         fields = (
             'id', 'first_name', 'last_name', 'username', 'email',
-            'is_active', 'created', 'updated', 'password', 'events')
+            'is_active', 'created', 'photo', 'updated', 'password',)
 
         extra_kwargs = {
             'email': {'required': True, },

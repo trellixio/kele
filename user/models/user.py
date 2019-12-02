@@ -1,7 +1,15 @@
+import os
+
 from django.contrib.auth.models import UserManager, AbstractUser
 from django.db import models
+from django.utils.timezone import now
 
 from xlib.utils import generate_uid
+
+
+def _content_file_name(instance, filename):
+    filename = "%s_%s" % (now().isoformat(), filename)
+    return os.path.join('user', filename)
 
 
 class EventUserManager(UserManager):
@@ -10,8 +18,8 @@ class EventUserManager(UserManager):
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, auto_created=True, default=generate_uid)
-
-    updated = models.DateTimeField(auto_now=True)
+    photo = models.ImageField(null=True, upload_to=_content_file_name)
+    updated = models.DateTimeField(auto_now=True, )
 
     objects = EventUserManager()
 

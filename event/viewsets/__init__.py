@@ -1,1 +1,1 @@
-from .event import EventViewSet, CurrentEventViewSet
+from .event import EventViewSet

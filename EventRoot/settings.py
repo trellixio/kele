@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'EventRoot.routers'
+ROOT_URLCONF = 'EventRoot.urls'
 
 TEMPLATES = [
     {
@@ -134,7 +134,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-        'xlib.rest_framework.permissions.IsOwnerOrAdmin',
+        'xlib.permissions.IsOwnerOrAdminOrReadOnly',
     ],
 
     'DEFAULT_THROTTLE_CLASSES': [
@@ -156,3 +156,6 @@ REST_FRAMEWORK = {
     ],
 
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

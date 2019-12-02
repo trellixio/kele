@@ -1,2 +1,2 @@
-from .event import EventSerializer, EventWithoutUserSerializer
+from .event import EventSerializer
 from .tag import EventTagSerializer
