@@ -22,11 +22,13 @@ Setup
     mkdir -p /var/www/kele/media
     chmod -R 777 /var/www/kele/
 
-5. Run migrations::
+5. Define the **JWT_SECRET** env var. Refer to this link https://www.grc.com/passwords.htm.
+
+6. Run migrations::
 
     python manage.py migrate
 
-6. Run the project::
+7. Run the project::
 
     python manage.py runserver
 
