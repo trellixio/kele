@@ -160,5 +160,5 @@ REST_FRAMEWORK = {
 
 # MEDIA
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = '/var/www/kele/media/'
