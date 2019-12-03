@@ -7,6 +7,8 @@ class IsOwnerOrAdminOrReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
 
         if request.method in SAFE_METHODS:
+            if isinstance(obj, User):
+                return obj == request.user
             return True
 
         if request.user.is_superuser:
@@ -14,6 +16,7 @@ class IsOwnerOrAdminOrReadOnly(BasePermission):
 
         if not isinstance(obj, User):
             return obj.user == request.user
+
         return obj == request.user
 
 

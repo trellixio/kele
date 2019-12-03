@@ -4,7 +4,6 @@ from django.db import models
 from django.utils.timezone import now
 
 from user.models import User
-from xlib.utils import generate_uid
 
 
 def _content_file_name(instance, filename):
@@ -17,8 +16,8 @@ class EventManager(models.Manager):
 
 
 class Event(models.Model):
+    # id = models.UUIDField(primary_key=True, auto_created=True, default=generate_uid)
     user = models.ForeignKey(User, related_name="event_set", on_delete=models.CASCADE)
-    id = models.UUIDField(primary_key=True, auto_created=True, default=generate_uid)
     name = models.CharField(max_length=200)
     date = models.DateTimeField()
     location = models.CharField(max_length=100)
@@ -33,5 +32,5 @@ class Event(models.Model):
         return "%s / %s" % (self.name, self.user.username)
 
     class Meta:
-        db_table = "event "
+        db_table = "event"
         managed = True

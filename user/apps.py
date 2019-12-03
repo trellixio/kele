@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class EventUserConfig(AppConfig):
+class UserConfig(AppConfig):
     name = 'user'
-    label = 'event_user'
+    label = 'user'

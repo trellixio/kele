@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'EventRoot.urls'
+ROOT_URLCONF = 'Kele.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'EventRoot.wsgi.application'
+WSGI_APPLICATION = 'Kele.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -119,7 +119,7 @@ STATIC_URL = '/static/'
 
 # Authentication
 
-AUTH_USER_MODEL = 'event_user.User'
+AUTH_USER_MODEL = 'user.User'
 
 # JWT
 
@@ -157,5 +157,8 @@ REST_FRAMEWORK = {
 
 }
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# MEDIA
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = '/var/www/kele/media/'

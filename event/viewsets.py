@@ -9,5 +9,3 @@ class EventViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Event.objects.all()
-
-    # def get_object(self):

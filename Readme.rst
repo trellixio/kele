@@ -17,7 +17,16 @@ Setup
 
     pip install -r requirements.txt
 
-4. Run the project::
+4. Create media root directory::
+
+    mkdir -p /var/www/kele/media
+    chmod -R 777 /var/www/kele/
+
+5. Run migrations::
+
+    python manage.py migrate
+
+6. Run the project::
 
     python manage.py runserver
 
